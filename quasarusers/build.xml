@@ -74,8 +74,8 @@
     </target>
 
     <target name="deploy">
-        <exec command="d:/cygwin/bin/scp docs.zip schmickler@shell.berlios.de:docs.zip" ></exec>
-        <exec command="d:/cygwin/bin/ssh -l schmickler shell.berlios.de docs.bsh" ></exec>
+        <exec executable="c:\cygwin\bin\scp"><arg value="docs.zip"/><arg value="-on"/><arg value="schmickler@shell.berlios.de:docs.zip"/></exec>
+        <exec executable="c:\cygwin\bin\ssh"><arg value="-l"/><arg value="schmickler"/><arg value="shell.berlios.de"/><arg value="docs.bsh"/></exec>
     </target>
 
 </project>

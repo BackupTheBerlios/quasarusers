@@ -70,6 +70,10 @@
       <includeParser value="true" />
       <maximumHeapSize value="128" />
       <viewClosedWhenNoErrors value="false" />
+      <targetFilters>
+        <filter targetName="xslt" isVisible="true" />
+        <filter targetName="deploy" isVisible="true" />
+      </targetFilters>
     </buildFile>
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="FILTER_TARGETS" value="false" />
@@ -116,8 +120,5 @@
     <option name="OUTPUT_DIRECTORY" />
   </component>
   <component name="WebReferencesManager" />
-  <component name="jeff.JeffProjectPlugin">
-    <option name="configurationFile" />
-  </component>
 </project>
 
