@@ -1,0 +1,13 @@
+<entity-type name="Fahrtkosten">
+   <package>reisekosten</package>
+   <extends>reisekosten.Kostenpunkt</extends>
+   <primary-key-generator>com.sdm.quasarx.persistence.util.SimplePKGenerator</primary-key-generator>
+   <properties>
+      <attribute name="weg">
+         <type>reisekosten.str100</type>
+      </attribute>
+      <attribute name="entfernung">
+         <type>reisekosten.num4</type>
+      </attribute>
+   </properties>
+</entity-type>

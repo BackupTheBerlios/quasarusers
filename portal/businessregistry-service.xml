@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+  <classpath codebase="deploy" archives="isis.jar" />
+  <classpath codebase="deploy" archives="isis_portal.jar" />
+  <classpath codebase="deploy" archives="isis_modelle.jar" />
+  <classpath codebase="deploy" archives="isis_berechtigung.jar" />
+  <classpath codebase="deploy" archives="isis_util.jar" />
+  <mbean code="de.sdm.sia.remis.portal.businessobject.BusinessObjectDeployer"
+  name="quasar:service=BusinessRegistry,name=RemisBusinessRegistry">
+    <depends>quasar:service=QuasarServer,name=RemisQuasarServer</depends>
+    <attribute name="Resource">businesscomponentregistry.xml</attribute>
+  </mbean>
+</service>

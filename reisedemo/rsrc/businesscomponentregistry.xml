@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<business-registry>
+    <business-system name="RemisBS" label="Remis">
+        <business-component class="de.sdm.sia.remis.reise.server.ReiseComponent">
+        </business-component>
+    </business-system>
+</business-registry>
+

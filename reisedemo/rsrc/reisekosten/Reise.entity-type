@@ -1,0 +1,36 @@
+<entity-type name="Reise">
+   <package>reisekosten</package>
+   <primary-key-generator>com.sdm.quasarx.persistence.util.SimplePKGenerator</primary-key-generator>
+   <properties>
+      <attribute name="oid">
+         <required>true</required>
+         <primary-key>true</primary-key>
+         <type>reisekosten.oid</type>
+      </attribute>
+      <attribute name="beschreibung">
+         <required>true</required>
+         <type>reisekosten.str100</type>
+      </attribute>
+      <relationship name="kostenpunkte">
+         <cascading-delete>NEVER</cascading-delete>
+         <inverse>reise</inverse>
+         <multiplicity>0,N</multiplicity>
+         <to>reisekosten.Kostenpunkt</to>
+      </relationship>
+      <attribute name="startDatum">
+         <type>reisekosten.Datum</type>
+      </attribute>
+      <attribute name="endDatum">
+         <type>reisekosten.Datum</type>
+      </attribute>
+      <attribute name="mitarbeiter">
+         <type>reisekosten.str100</type>
+      </attribute>
+      <relationship name="kostenstelle">
+         <cascading-delete>NEVER</cascading-delete>
+         <inverse>reisen</inverse>
+         <multiplicity>0,1</multiplicity>
+         <to>reisekosten.Kostenstelle</to>
+      </relationship>
+   </properties>
+</entity-type>

@@ -1,0 +1,7 @@
+<type class="java.lang.Double" name="num4">
+   <package>reisekosten</package>
+   <number>
+      <scale>0</scale>
+      <precision>4</precision>
+   </number>
+</type>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration>
+  <trace-level label="com.sdm.quasar" level="FULL"/>
+  <trace-level label="com.sdm.quasar.persistence" level="FULL"/>
+  <trace-level label="com.sdm.quasar.modelview" level="FULL"/>
+  <trace-level label="com.sdm.quasar.component" level="LOW"/>
+  <log-level label="com.sdm.quasar" level="FULL"/>
+	<jdbc-driver>oracle.jdbc.driver.OracleDriver</jdbc-driver>
+	<persistence name="remis">
+		<pooled-data-source>
+			<url>jdbc:oracle:thin:@cgn0107:1521:marco</url>
+			<user>SDMISIS</user>
+			<password>SDMISIS</password>
+			<max-connections>10</max-connections>
+			<opt-connections>5</opt-connections>
+			<max-statements>100</max-statements>
+			<opt-statements>50</opt-statements>
+		</pooled-data-source>
+<!--		<supports-nested-transactions>FALSE</supports-nested-transactions>-->
+	</persistence>
+
+	<model>
+		<load-pool name="remis">
+      <!--  JarRepository ist eigentlich ein Classpath-Repository und sucht nach -->
+      <!--  Resource-Dateien. Alternativ können die Resources in webinf/lib als Jar -->
+      <!--  oder in webinf/classes als Resourcen liegen. -->
+      <!--  Gesucht wird grundsätzlich auf Toplevel-Ebene nach einer .pool Datei. -->
+      <jar-repository/>
+
+       <!--  FileRepository kann alternativ zum JarRepository verwendet werden. -->
+       <!--  Es erfordert derzeit absolute Pfadangabe, daher wird diese Möglichkeit nicht genutzt. -->
+<!--	<file-repository root="d:/prisma/remis/rsrc"/>-->
+		</load-pool>
+	</model>
+
+<!--    <viewserver></viewserver>-->
+
+    <modelviewserver></modelviewserver>
+
+    <!--  -->
+    <!--   Deploy business systems...-->
+    <!--  -->
+    <!-- -->
+    <!--  All application objects to be deployed, when the server starts up (arguments may be supplied)-->
+
+<!--    <loadable class="de.sdm.sia.remis.RemisBS"/>-->
+
+
+</configuration>

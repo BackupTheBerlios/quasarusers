@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<query documentation="" label="sortiert nach Beschreibung" name="reise2" type="reisekosten.Reise">
+    <columns>
+        <column path="beschreibung" title="beschreibung"/>
+        <column path="mitarbeiter" title="mitarbeiter"/>
+    </columns>
+    <ordering>
+        <order direction="ascending" path="beschreibung"/>
+    </ordering>
+    <filters>
+        <filter label="Mitarbeiter like" name="mitarbeiter">
+            <attribute path="mitarbeiter"/>
+            <like/>
+            <parameter type="java.lang.String" name="param" label="Mitarbeiter"/>
+        </filter>
+        <filter label="Beschreibung like" name="beschreibung">
+            <attribute path="beschreibung"/>
+            <like/>
+            <parameter type="java.lang.String" name="param" label="Beschreibung"/>
+        </filter>
+    </filters>
+</query>

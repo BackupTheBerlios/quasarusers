@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<application package="de.sdm.sia.remis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="application.xsd">
+	<import>
+    import de.sdm.sia.remis.modelle.*;
+    </import>
+
+<!--	<dataview name="ReiseDataViewDescription" class="Reise" package=".modelviews.server">-->
+<!--		<datacontroller class="SimpleDataController">new reisekosten.modelviews.server.ReiseDescription()</datacontroller>-->
+<!--		<datamodel name="Reisen">-->
+<!--			<query name="Standard" type="reisekosten.Reise" label="alle Reisen" documentation="">-->
+<!--				<column title="oid" path="oid" primarykey="true"/>-->
+<!--				<column title="startDatum" path="startDatum" primarykey="false"/>-->
+<!--                <column title="beschreibung" path="beschreibung" primarykey="false"/>-->
+<!--			</query>-->
+<!--            <xmlquery name="Query"/>-->
+<!--		</datamodel>-->
+<!--	</dataview>-->
+
+	<objectview name="Benutzer" package=".benutzer.server">
+		<objectmodel class="Benutzer" view="BenutzerView" package=".benutzer">
+			<command name="drucken"/>
+			<all-attributes/>
+			<relationshipmodel name="istingruppe" lockmode="REFERENCE">
+				<collectionobjectmodel class="Benutzergruppe" view="BenutzergruppeTableView" package=".benutzer">
+					<visualizer type="Swing"</visualizer>
+					<all-attributes/>
+				</collectionobjectmodel>
+			</relationshipmodel>
+		</objectmodel>
+	</objectview>
+</application>

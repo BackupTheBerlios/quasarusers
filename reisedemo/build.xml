@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<!-- ant build file for JEFF -->
+<!-- $Id: build.xml,v 1.1 2003/03/26 19:59:51 schmickler Exp $ -->
+
+<project name="remis" default="main" basedir=".">
+  <path id="build.classpath">
+    <pathelement path="${java.class.path}/" />
+    <fileset dir="lib">
+      <include name="*.jar" />
+    </fileset>
+  </path>
+
+  <!-- ==================== Properties ==================== -->
+
+  <target name="init">
+    <tstamp/>
+    <property name="jboss-home" value="c:\jboss-3.0.4_tomcat-4.1.12"/>
+    <property name="pkg.prefix"    value="de/sdm/sia/remis" />
+    <property name="project.name"  value="isis"/>
+    <property name="version"       value="2.0"/>
+    <property name="debug"         value="on" />
+
+    <!-- directories -->
+
+    <property name="home"    value="${basedir}" />
+    <property name="src"     value="${home}/src" />
+    <property name="rsrc"    value="${home}/rsrc" />
+    <property name="config"  value="${home}/config" />
+    <property name="build"   value="${home}/build" />
+    <property name="classes" value="${build}/classes" />
+    <property name="dist"    value="${build}/dist_${version}" />
+    <property name="deploy"  value="${dist}/deploy" />
+    <property name="doc"     value="${build}/doc" />
+    <property name="distlib" value="${dist}/lib" />
+    <property name="lib"     value="${home}/lib" />        <!-- external libraries -->
+
+    <!-- some additional properties for ant -->
+    <property file="build.properties" />
+  </target>
+
+  <!-- ==================== Preparations ==================== -->
+
+  <target name="_prepare" depends="init">
+    <mkdir dir="${build}" />
+    <mkdir dir="${classes}" />
+    <mkdir dir="${classes}/config" />
+    <mkdir dir="${dist}" />
+    <mkdir dir="${distlib}" />
+    <mkdir dir="${deploy}" />
+    <mkdir dir="${doc}" />
+    <mkdir dir="${doc}/api" />
+    <mkdir dir="${lib}" />     <!-- avoid errors in case it does not exist -->
+  </target>
+
+
+  <!-- ==================== Build ==================== -->
+
+  <target name="shutdown" depends="init">
+      <exec executable="${jboss-home}/bin/shutdown.bat" />
+  </target>
+
+  <target name="build" depends="_prepare">
+      <exec executable="${jboss-home}/bin/shutdown.bat"></exec>
+<!--    <delete file="${jboss-home}/server/default/deploy/businessregistry-service.xml"/>-->
+    <delete file="${jboss-home}/server/default/deploy/${project.name}.jar"/>
+
+    <javac srcdir="${src}" destdir="${classes}" debug="${debug}">
+      <classpath refid="build.classpath" />
+    </javac>
+
+    <delete dir="${build}/META-INF"/>
+    <mkdir dir="${build}/META-INF"/>
+    <copy file="${home}/ejb-jar.xml" todir="${build}/META-INF" />
+    <copy file="${home}/jboss.xml" todir="${build}/META-INF" />
+      <patternset id="_dist_classes">
+<!--          <exclude name="de/sdm/sia/remis/berechtigung/**"/>-->
+          <exclude name="de/sdm/sia/remis/modelle/**"/>
+<!--          <exclude name="de/sdm/sia/remis/portal/**"/>-->
+<!--          <exclude name="de/sdm/sia/remis/util/**"/>-->
+      </patternset>
+
+    <jar jarfile="${dist}/${project.name}.jar" >
+       <fileset dir="${classes}">
+           <patternset refid="_dist_classes" />
+       </fileset>
+
+       <fileset dir="${rsrc}">
+           <patternset refid="_dist_classes" />
+       </fileset>
+
+       <fileset dir="${build}">
+          <include name="META-INF/*.xml"/>
+       </fileset>
+    </jar>
+<!--    <zip zipfile="${dist}/${project.name}src.zip"-->
+<!--         basedir="${src}" >-->
+<!--       <fileset dir="${src}" excludes="**/CVS" />-->
+<!--    </zip>-->
+  </target>
+
+  <target name="deployserver" depends="build">
+      <copy file="${dist}/${project.name}.jar" todir="${jboss-home}/server/default/deploy"/>
+<!--      <copy file="${home}/businessregistry-service.xml" todir="${jboss-home}/server/default/deploy"/>-->
+<!--      <exec executable="${jboss-home}/bin/run.bat" />-->
+  </target>
+
+  <!-- ==================== Generate API Docs ==================== -->
+
+  <target name="doc" depends="_prepare">
+    <javadoc packagenames="de.sdm.sia.*"
+             maxmemory="128m"
+             sourcepath="${src}"
+             destdir="${doc}/api"
+	         classpathref="build.classpath"
+             version="true"
+             use="true"
+             windowtitle="REMIS ${version}"
+             doctitle=" ${version}"
+             bottom="REMIS"
+    />
+    <zip zipfile="${dist}/${project.name}doc.zip"
+         basedir="${doc}/api" >
+       <fileset dir="${doc}/api" excludes="**/CVS" />
+    </zip>
+  </target>
+  <target name="javadoc" depends="doc" description="create api-doc"/>
+
+  <!-- ==================== Admin ==================== -->
+
+  <target name="clean" depends="init"
+          description="cleanup build results">
+
+    <delete dir="${build}"/>
+    <delete dir="${deploy}"/>
+  </target>
+
+  <target name="cleansource" depends="init"
+          description="cleanup sources (tmp/backup-files, classes)">
+    <delete>
+      <fileset dir="${src}">
+        <include name="**/*.class" />
+        <include name="**/*.u" />
+        <include name="**/*~" />
+      </fileset>
+    </delete>
+  </target>
+
+  <target name="all" depends="clean,build" description="re-build everything"/>
+  <target name="main" depends="build" description="build changed files"/>
+
+  <target name="dist" depends="init" description="create distribution tar.gz">
+      <property name="distname" value="${project.name}-${version}"/>
+      <delete dir="${distname}"/>
+      <mkdir dir="${distname}"/>
+
+      <!-- copy all relevant files for the distribution -->
+      <filter token="VERSION" value="${version}" />
+      <!-- copy todir="${distname}" file="VERSION" filtering="true" -->
+      <copy todir="${distname}">
+         <fileset dir="${home}">
+            <include name="TODO" />
+            <include name="build.*" />
+            <include name="lib/" />
+            <include name="${rsrc}" />
+            <exclude name="**/CVS" />
+         </fileset>
+      </copy>
+      <tar tarfile="${distname}.tar" basedir="." includes="${distname}/" />
+      <gzip src="${distname}.tar" zipfile="${distname}.tar.gz" />
+      <delete file="${distname}.tar" />
+      <delete dir="${distname}" />
+  </target>
+
+
+    <target name="wizard"
+       description="Render Java via XSLT">
+
+        <!-- Transform the top-level directory -->
+<!--        <delete dir="./src/" />-->
+
+        <style   basedir="generator"
+                 destdir="src"
+            force="yes"
+               extension=".java"
+                   style="wizard.xsl"
+                includes="reise.xml">
+        </style>
+<!--        <delete file="./src/reise.java" />-->
+    </target>
+</project>

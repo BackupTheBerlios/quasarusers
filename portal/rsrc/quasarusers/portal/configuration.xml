@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<configuration>
+  <trace-level label="com.sdm.quasar" level="FULL"/>
+  <trace-level label="com.sdm.quasar.persistence" level="FULL"/>
+  <trace-level label="com.sdm.quasar.modelview" level="FULL"/>
+  <trace-level label="com.sdm.quasar.component" level="LOW"/>
+  <log-level label="com.sdm.quasar" level="FULL"/>
+	<jdbc-driver>oracle.jdbc.driver.OracleDriver</jdbc-driver>
+	<persistence name="remis">
+		<pooled-data-source>
+			<url>jdbc:oracle:thin:@cgn0107:1521:marco</url>
+			<user>SDMISIS</user>
+			<password>SDMISIS</password>
+<!--
+			<url>jdbc:oracle:oci8:@SDMENTW2</url>
+			<url>jdbc:oracle:oci8:@SIALOCAL</url>
+-->
+			<max-connections>10</max-connections>
+			<opt-connections>5</opt-connections>
+			<max-statements>100</max-statements>
+			<opt-statements>50</opt-statements>
+		</pooled-data-source>
+<!--		<supports-nested-transactions>FALSE</supports-nested-transactions>-->
+	</persistence>
+	<model>
+		<load-pool name="remis">
+      <!--  JarRepository ist eigentlich ein Classpath-Repository und sucht nach -->
+      <!--  Resource-Dateien. Alternativ können die Resources in webinf/lib als Jar -->
+      <!--  oder in webinf/classes als Resourcen liegen. -->
+      <!--  Gesucht wird grundsätzlich auf Toplevel-Ebene nach einer .pool Datei. -->
+      <jar-repository/>
+
+       <!--  FileRepository kann alternativ zum JarRepository verwendet werden. -->
+       <!--  Es erfordert derzeit absolute Pfadangabe, daher wird diese Möglichkeit nicht genutzt. -->
+<!--	<file-repository root="d:/prisma/remis/rsrc"/>-->
+		</load-pool>
+	</model>
+
+    <view userinterfacetype="wings">
+        <dialogmanager>com.sdm.quasar.view.implementation.wings.WingsDialogManager</dialogmanager>
+        <continuationdelegate/>
+    </view>
+
+    <viewserver>
+        <continuationdelegate/>
+    </viewserver>
+
+<!-- Durch die folgenden Einstellungen wird der Server für den Swing-Client konfiguriert -->
+    <communicationmanager protocols="de.sdm.sia.remis.portal.ServerMain$SimpleSocketServer"
+        arguments="QuasarServer;rmi://pentium/" defaultprotocol="LOCAL">
+    </communicationmanager>
+
+    <viewserver name="communicationserver">
+        <communicationserverdelegate/>
+    </viewserver>
+
+    <loadable class="de.sdm.sia.remis.portal.ServerMain">testserver</loadable>
+<!--  Ende Swing-Client  -->
+
+    <modelview></modelview>
+    <modelviewserver></modelviewserver>
+
+
+    <!-- -->
+    <!--  Parameter für die Komponente "PORTAL"-->
+    <!-- -->
+
+    <!-- Anmelden mit Cookie erlaubt? (Default: false)-->
+    <!-- Falls "true" wird man automatisch so angemeldet wie beim vorigen "Anmelden mit Cookie"
+ -->
+    <component name="de.sdm.sia.remis.portal.anmelden.wings.AnmeldenMitCookie">true</component>
+
+
+    <!-- -->
+    <!--  Parameter für die Komponente "MITARBEITER" -->
+    <!-- -->
+
+    <!--  Anzahl der dargestellten Mitarbeiter  in "StandardMAListe" -->
+    <!--  (Falls mehr angezeigt werden, wird gescrollt) -->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.auswaehlen.standard.wings.Tablesize">10</component>
+
+    <!--  Anzahl der dargestellten Mitarbeiter  in "ErweiterteMAListe" -->
+    <!--  (Falls mehr angezeigt werden, wird gescrollt)-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.auswaehlen.erweitert.wings.Tablesize">10</component>
+
+    <!--  Dateipfad für Mitarbeiterfots: Präfix, Infix, Suffix -->
+    <!--  Die Dateiangabe setzt sich zusammen aus:-->
+    <!--  - FotoPraefix-->
+    <!--  - DATEI.PFAD-->
+    <!--  - FotoInfix-->
+    <!--  - DATEI.NAME-->
+    <!--  - FotoSuffix-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.anzeigen.stamm.server.FotoPraefix">../fotos/</component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.anzeigen.stamm.server.FotoInfix"></component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.anzeigen.stamm.server.FotoSuffix"></component>
+
+    <!--  Pfad zu Homepage/Präfix für Mitarbeiter-Homepages-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.anzeigen.stamm.server.HomepagePfad">http://sww.sdm.de/ma/</component>
+
+    <!--  Dateipfad für MA-Profile (bei Download): Präfix, Infix, Suffix -->
+    <!--  Die Dateiangabe setzt sich zusammen aus:-->
+    <!--  - DateiartPraefix-->
+    <!--  - DATEI.PFAD-->
+    <!--  - DateiartInfix-->
+    <!--  - DATEI.NAME-->
+    <!--  - DateiartSuffix-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.anzeigen.intern.server.DateiartPraefix">../profile/</component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.anzeigen.intern.server.DateiartInfix"></component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.anzeigen.intern.server.DateiartSuffix"></component>
+
+    <!--  Dateipfad für MA-Profile (im Dialog Pflege MA-Profil, zum Lesen von MA-Profilen): Präfix, Infix, Suffix -->
+    <!--  Die Dateiangabe setzt sich zusammen aus:-->
+    <!--  - ProfilPraefix-->
+    <!--  - DATEI.PFAD-->
+    <!--  - ProfilInfix-->
+    <!--  - DATEI.NAME-->
+    <!--  - ProfilSuffix-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_profil.server.ProfilPraefix">D:/Programme/jakarta-tomcat-4.0/webapps/remis/profile/</component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_profil.server.ProfilInfix">/</component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_profil.server.ProfilSuffix"></component>
+
+    <!--  Dateipfad für MA-Profile (im Dialog Pflege MA-Profil, zum Schreiben von MA-Profilen): Präfix, Infix, Suffix -->
+    <!--  Die Dateiangabe setzt sich zusammen aus:-->
+    <!--  - ProfilPraefixUpload-->
+    <!--  - Mitarbeiter.sdmmitarbeiterid-->
+    <!--  - "_"-->
+    <!--  - Profilsprache-->
+    <!--  - ProfilSuffixUpload-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_profil.server.ProfilPraefixUpload"></component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_profil.server.ProfilSuffixUpload">.doc</component>
+
+    <!--  Verzeichnis, in dem über GUI gelöschte MA-Profile abgelegt werden-->
+    <!--  Die Dateiangabe setzt sich zusammen aus:-->
+    <!--  - ProfilDeletedPath-->
+    <!--  - DATEI.NAME-->
+    <!--  - laufende Nummer (0, 1, ...)-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_profil.server.ProfilDeletedPath">D:/Programme/jakarta-tomcat-4.0/webapps/remis/profile_deleted/</component>
+
+    <!--  Dateiartangabe (=Sprache) für die MA-Profile (entsprechend den Werten in der Tabelle T_DATEIART)-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_profil.server.ProfilDateiart1">DE</component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_profil.server.ProfilDateiart2">EN</component>
+
+    <!--  Dateipfad für Foto (im Dialog Pflege MA-Foto, zum Lesen von MA-Fotos): Präfix, Infix, Suffix -->
+    <!--  Die Dateiangabe setzt sich zusammen aus:-->
+    <!--  - FotoPraefix-->
+    <!--  - DATEI.PFAD-->
+    <!--  - FotoInfix-->
+    <!--  - DATEI.NAME-->
+    <!--  - FotoSuffix-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoPraefixDarstell">../fotos/</component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoInfixDarstell"></component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoSuffixDarstell"></component>
+
+
+    <!--  Dateipfad für Foto (im Dialog Pflege MA-Foto, zum Lesen von MA-Fotos): Präfix, Infix, Suffix -->
+    <!--  Die Dateiangabe setzt sich zusammen aus:-->
+    <!--  - FotoPraefix-->
+    <!--  - DATEI.PFAD-->
+    <!--  - FotoInfix-->
+    <!--  - DATEI.NAME-->
+    <!--  - FotoSuffix-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoPraefix">D:/Programme/jakarta-tomcat-4.0/webapps/remis/fotos/</component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoInfix">/</component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoSuffix"></component>
+
+
+    <!--  Dateipfad für MA-Fotos (im Dialog Pflege MA-Foto, zum Schreiben von MA-Fotos): Präfix, Infix, Suffix -->
+    <!--  Die Dateiangabe setzt sich zusammen aus:-->
+    <!--  - FotoPraefixUpload-->
+    <!--  - Mitarbeiter.sdmmitarbeiterid "_" Dateiart(deutsch/Englisch)-->
+    <!--  - FotoSuffixUpload-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoPraefixUpload"></component>
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoSuffixUpload">.jpg</component>
+
+    <!--  Verzeichnis, in dem über GUI gelöschte MA-Fotos abgelegt werden-->
+    <!--  Die Dateiangabe setzt sich zusammen aus:-->
+    <!--  - FotoDeletedPath-->
+    <!--  - DATEI.NAME-->
+    <!--  - laufende Nummer (0, 1, ...)-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoDeletedPath">D:/Programme/jakarta-tomcat-4.0/webapps/remis/fotos_deleted/</component>
+
+    <!--  Dateiartangabe für die MA-Fotos (entsprechend den Werten in der Tabelle T_DATEIART)-->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.pflegen_foto.server.FotoDateiart">foto</component>
+
+    <!--  Debug-Mode für MA-Details -->
+    <!--  Falls "yes", werden Druckansichten als xml in Datei "print.xml" abgelegt. ACHTUNG: Nicht multiuserfähig!!!  -->
+    <component name="de.sdm.sia.remis.mitarbeiter.praesentation.mitarbeiter.anzeigen.server.debug">yes</component>
+
+
+
+    <!-- -->
+    <!--  Parameter für die Komponente "SUCHMASCHINE" -->
+    <!-- -->
+
+    <!-- Verzeichnis für die Dateiablage -->
+    <component name="de.sdm.sia.remis.suchmaschine.anwendungslogik.SuchmaschinePath">/u/sww/tmp/SDMENTW1/suchmaschine/</component>
+
+    <!-- Soll der Timer laufen? -->
+    <component name="component.de.sdm.sia.remis.suchmaschine.anwendungslogik.RunTimer">yes</component>
+
+    <!-- Uhrzeit für die Generierung (Default 0 Uhr)-->
+    <component name="component.de.sdm.sia.remis.suchmaschine.anwendungslogik.Time">12:00</component>
+
+    <!-- Mailhost für Fehler-Emails -->
+    <component name="de.sdm.sia.remis.suchmaschine.anwendungslogik.Mailhost">ratexch2.rat.sdm.de</component>
+
+    <!-- Absender der Fehler-Emails -->
+    <component name="de.sdm.sia.remis.suchmaschine.anwendungslogik.AddressFrom">integration@sdm.de</component>
+
+    <!-- Empfänger der Fehler-Emails -->
+    <component name="de.sdm.sia.remis.suchmaschine.anwendungslogik.AddressTo">Markus.Steindl@sdm.de</component>
+
+
+
+    <!--  -->
+    <!--   Deploy business systems...-->
+    <!--  -->
+    <!-- -->
+    <!--  All application objects to be deployed, when the server starts up (arguments may be supplied)-->
+<!--
+    <loadable class="de.sdm.sia.remis.einfuehrung.ProduktCreator"/>
+    <loadable class="de.sdm.sia.remis.einfuehrung.ThemenbaumCreator"/>
+-->
+
+    <loadable class="de.sdm.sia.remis.RemisBS"/>
+
+    <!--   EreignisBatch (erzeugt Emails)-->
+    <!--   Parameter:-->
+    <!--    - Long    die Wartezeit bis zum Start (in ms), z. B. 0 -->
+    <!--    - Long    die Dauer zwischen zwei Start (in ms). Vorsicht: Zeit so hoch -->
+    <!--              wählen, dass zwei Läufe sich nicht überschneiden-->
+    <!--    - String  der der Name des Mailhosts, z. B. ratexch2.rat.sdm.de-->
+    <!--    - String  der Name der Excel-Import-Datei-->
+    <!--    - String  der voll-qualifizierte Name der Fabrik-Klasse. Dies muss eine-->
+    <!--              Spezialisierung von NachrichtenanforderungInhaltFabrik sein, z. B. -->
+    <!--              de.sdm.sia.remis.benachrichtigung.anwendungslogik.NachrichtenanforderungXMLFabrik-->
+    <!--    - String  (optional) für QS-Test: Name des Test-Empfängers, der statt der-->
+    <!--              eigentlichen Empfängers verwendet wird-->
+    <!--<loadable class="de.sdm.sia.remis.benachrichtigung.anwendungslogik.EreignisBatch">1000;100000;ratexch2.rat.sdm.de;D:/Programme/jakarta-tomcat-4.0/webapps/remis/rsrc/de/sdm/sia/remis/benachrichtigung/anwendungslogik/nachrichtentyp.xls;de.sdm.sia.remis.benachrichtigung.anwendungslogik.NachrichtenanforderungXMLFabrik;Matthias.Rademacher@sdm.de</loadable>-->
+
+    <!--<loadable class="de.sdm.sia.remis.portal.ServerMonitor"/>-->
+  
+    <!--  <loadable class=dde.sdm.sia.remis.berechtigung.anwendungslogik.berechtigungBC.Testdaten"/>-->
+    <!--  <loadable class=dde.sdm.sia.remis.orgeinheit.anwendungslogik.orgeinheitBM.Testdaten"/>-->
+    <!--  <loadable class=de.sdm.sia.remis.mitarbeiter.anwendungslogik.MitarbeiterPasswortGenerator"/>-->
+
+</configuration>

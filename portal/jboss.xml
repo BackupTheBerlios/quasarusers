@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jboss>
+  <enterprise-beans>
+    <session>
+      <ejb-name>QuasarSwingSessionEJB</ejb-name>
+      <jndi-name>quasar/QuasarSwingSession</jndi-name>
+    </session>
+  </enterprise-beans>
+</jboss>

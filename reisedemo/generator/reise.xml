@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<application package="de.sdm.sia.remis" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="application.xsd">
+	<import>
+    import reisekosten.*;
+    </import>
+
+	<objectview name="Reise" package=".reise.server" model="RemisBS.ReiseComponent">
+		<objectmodel class="Reise" view="ReiseView" package=".reise">
+<!--			<command name="drucken"/>-->
+			<visualizer type="Swing" template="Reise.xml"/>
+			<visualizer type="Wings" template="Reise.html"/>
+			<all-attributes/>
+			<relationshipmodel name="kostenpunkte" lockmode="REFERENCE">
+				<collectionobjectmodel class="Kostenpunkt" view="KostenpunktTableView" package=".reise">
+					<visualizer type="Swing">, "fieldMappingFactory", new reisekosten.swing.MoneyFieldMappingFactory(), "columnNames", new String[]{"betrag"}</visualizer>
+					<visualizer type="Wings">, "columnNames", new String[]{"betrag"}</visualizer>
+					<all-attributes/>
+				</collectionobjectmodel>
+			</relationshipmodel>
+		</objectmodel>
+	</objectview>
+</application>

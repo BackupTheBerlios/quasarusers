@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE xml2swing SYSTEM "http://www.sdm.com/dtd/xml2swing-1.0.dtd">
+
+<xml2swing>
+    <visual>
+            <panel id="panel">
+                <layoutmanager type="table">
+                    <columns>100, 80</columns>
+                       <rows>20, 20, 200</rows>
+                </layoutmanager>
+                    <!-- constraint is String:
+                       column, row [, Left/Center/Full/Right [,Top/Center/Full/Bottom]])
+                       or
+                       startColumn, startRow, endColumn, endRow
+
+                       TableLayout.FILL       is -1
+                       TableLayout.PREFERRED  is -2
+                       TableLayout.MINIMUM    is -3
+                    -->
+                <label><text>Mitarbeiter</text><constraint>0, 0</constraint></label>
+                <textfield id="mitarbeiter"><constraint>1,0</constraint></textfield>
+                <label><text>Beschreibung</text><constraint>0, 1</constraint></label>
+                <textfield id="beschreibung"><constraint>1,1</constraint></textfield>
+                <panel id="Kostenpunkt">
+                    <layoutmanager type="border"></layoutmanager>
+                    <panel id="KostenpunktPanel">
+                        <layoutmanager type="table">
+                            <columns>60, 120</columns>
+                               <rows>50</rows>
+                        </layoutmanager>
+                        <label><text>Betrag</text><constraint>0, 0</constraint></label>
+                        <any id="betrag" class="reisekosten.swing.JMoneyField"><constraint>1,0</constraint></any>
+                        <constraint>South</constraint>
+                    </panel>
+                    <scrollpane id="scrollpane">
+                        <table id="KostenpunktTable"></table>
+                        <constraint>Center</constraint>
+                    </scrollpane>
+                    <constraint>0, 2, 1, 2</constraint>
+                </panel>
+            </panel>
+    </visual>
+</xml2swing>

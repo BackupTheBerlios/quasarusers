@@ -1,0 +1,10 @@
+<type class="java.lang.Integer" name="KostenstellenNr">
+   <package>reisekosten</package>
+   <constraint>
+      <range from="1000" to="9999"/>
+   </constraint>
+   <number>
+      <scale>0</scale>
+      <precision>4</precision>
+   </number>
+</type>

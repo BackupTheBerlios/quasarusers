@@ -1,0 +1,6 @@
+<type class="java.lang.String" name="str100">
+   <package>reisekosten</package>
+   <text>
+      <length>100</length>
+   </text>
+</type>

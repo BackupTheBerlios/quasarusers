@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="all-attributes">
+		<xs:complexType/>
+	</xs:element>
+	<xs:element name="application">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="import" type="xs:string"/>
+				<xs:element name="dataview" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="datacontroller">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="xs:string">
+											<xs:attribute name="class" type="xs:string" use="required"/>
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="datamodel">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="query" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="column" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="title" type="xs:string" use="required"/>
+															<xs:attribute name="path" type="xs:string" use="required"/>
+															<xs:attribute name="primarykey" use="optional" default="false">
+																<xs:simpleType>
+																	<xs:restriction base="xs:NMTOKEN">
+																		<xs:enumeration value="false"/>
+																		<xs:enumeration value="true"/>
+																	</xs:restriction>
+																</xs:simpleType>
+															</xs:attribute>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="name" type="xs:string" use="required"/>
+												<xs:attribute name="type" type="xs:string" use="required"/>
+												<xs:attribute name="label" type="xs:string" use="required"/>
+												<xs:attribute name="documentation" type="xs:string" use="required"/>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="xmlquery" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:attribute name="name" type="xs:string"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:attribute name="name" type="xs:string" use="required"/>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="class" type="xs:string" use="required"/>
+						<xs:attribute name="package" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="objectview" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:group ref="objectmodel"/>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="package" type="xs:string" use="required"/>
+						<xs:attribute name="model" type="xs:string" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="package" type="xs:string" use="required"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:group name="abstractview">
+		<xs:sequence>
+			<xs:element name="command" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="name" type="xs:string"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="remotecommand" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="visualizer" minOccurs="0">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:string">
+							<xs:attribute name="type" type="xs:string" use="required"/>
+							<xs:attribute name="panel" type="xs:string" use="optional"/>
+							<xs:attribute name="template" type="xs:string" use="optional"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<xs:group name="objectmodel">
+		<xs:choice>
+			<xs:element name="collectionobjectmodel">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="abstractview"/>
+						<xs:element ref="all-attributes" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="class" type="xs:string" use="required"/>
+					<xs:attribute name="view" type="xs:string" use="required"/>
+					<xs:attribute name="package" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="objectmodel">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:group ref="abstractview"/>
+						<xs:element ref="all-attributes" minOccurs="0"/>
+						<xs:element name="relationshipmodel" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:group ref="objectmodel"/>
+								</xs:sequence>
+								<xs:attribute name="name" type="xs:string" use="required"/>
+								<xs:attribute name="lockmode" type="xs:string" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="class" type="xs:string" use="required"/>
+					<xs:attribute name="view" type="xs:string" use="required"/>
+					<xs:attribute name="package" type="xs:string" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:choice>
+	</xs:group>
+</xs:schema>

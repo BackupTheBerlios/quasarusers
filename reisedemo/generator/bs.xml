@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<?xml-stylesheet href="wizard" ?>
+<!--<!DOCTYPE application SYSTEM "./wizard.dtd">-->
+
+<application package = "de.sdm.sia.remisgen">
+
+<bsystem name="Remis" label="Remis" documentation="keine Doku">
+    <bmodule name="Berechtigung" label="Berechtigung" documentation="keine Doku" package=".berechtigung">
+        <bcomponent name="BenutzerBC" label="Benutzer" documentation="keine Doku" package=".berechtigung.anwendungslogik.berechtigungBM">
+            <import package="import de.sdm.sia.remis.modelle.*;"/>
+            <entity class="Benutzer" label="" documentation="" view="de.sdm.sia.remisgen.berechtigung.praesentation.benutzer.pflegen.server.BenutzerViewDescription">
+                <create/><modify/><browse view="de.sdm.sia.remisgen.berechtigung.praesentation.benutzer.suchen.server.BenutzerDataViewDescription"/>
+            </entity>
+            <openview name="anmelden" label="anmelden" view="de.sdm.sia.remisgen.berechtigung.praesentation.benutzer.anmelden.server.AnmeldenViewDescription"/>
+        </bcomponent>
+        <bcomponent name="BenutzergruppeBC" label="Benutzergruppe" documentation="keine Doku" package=".berechtigung.anwendungslogik.berechtigungBM">
+            <import package="import de.sdm.sia.remis.modelle.*;"/>
+            <entity class="Benutzergruppe" label="" documentation="" view="de.sdm.sia.remisgen.berechtigung.praesentation.benutzergruppe.pflegen.server.BenutzergruppeViewDescription">
+                <create/><modify/><browse view="de.sdm.sia.remisgen.berechtigung.praesentation.benutzergruppe.suchen.server.BenutzergruppeDataViewDescription"/>
+            </entity>
+        </bcomponent>
+    </bmodule>
+</bsystem>
+
+<entityview name="BenutzergruppeViewDescription" package = ".berechtigung.praesentation.benutzergruppe.pflegen.server">
+    <import package="import de.sdm.sia.remis.modelle.*;"/>
+    <objectmodel class="Benutzergruppe" view="BenutzergruppeView" package = ".berechtigung.praesentation.benutzergruppe.pflegen">
+        <command name="anmelden"/>
+        <visualizer type="Wings" template="benutzergruppepflegen.html" />
+        <all-attributes/>
+        <relationshipmodel name="benutzer" lockmode="REFERENCE">
+            <collectionobjectmodel class="Benutzer" view="BenutzerTableView" package = ".berechtigung.praesentation.benutzergruppe.pflegen">
+                <visualizer type="Wings" template="benutzertable.html" />
+                <all-attributes/>
+            </collectionobjectmodel>
+        </relationshipmodel>
+    </objectmodel>
+</entityview>
+
+<entityview name="BenutzerViewDescription" package = ".berechtigung.praesentation.benutzer.pflegen.server">
+    <import package="import de.sdm.sia.remis.modelle.*;"/>
+    <objectmodel class="Benutzer" view="BenutzerView" package = ".berechtigung.praesentation.benutzer.pflegen">
+        <visualizer type="Wings" template="benutzer.html" />
+        <all-attributes/>
+        <relationshipmodel name="istInGruppe" lockmode="REFERENCE">
+            <collectionobjectmodel class="Benutzergruppe" view="BenutzergruppeView" package = ".berechtigung.praesentation.benutzer.pflegen">
+                <visualizer type="Wings" template="benutzergruppe.html" />
+                <attributemodel name="name" />
+            </collectionobjectmodel>
+        </relationshipmodel>
+    </objectmodel>
+</entityview>
+
+<extentview name="BenutzerDataViewDescription" class="Benutzer" package = ".berechtigung.praesentation.benutzer.suchen.server" businesscomponent="Remis.Berechtigung.BenutzerBC" >
+    <import package="import de.sdm.sia.remis.modelle.*;"/>
+    <datamodel name="Benutzer">
+        <query name="standard" type = "de.sdm.sia.remis.modelle.Benutzer" label = "alle Benutzer" documentation = "" >
+                <column title="oid" path="oid" primarykey="true"/>
+                <column title="Kennung" path="kennung" primarykey="false"/>
+        </query>
+    </datamodel>
+</extentview>
+
+<extentview name="BenutzergruppeDataViewDescription" class="Benutzergruppe" package = ".berechtigung.praesentation.benutzergruppe.suchen.server" businesscomponent="Remis.Berechtigung.BenutzergruppeBC" >
+    <import package="import de.sdm.sia.remis.modelle.*;"/>
+    <datamodel name="Benutzergruppe">
+        <query name="standard" type = "de.sdm.sia.remis.modelle.Benutzergruppe" label = "alle Benutzergruppen" documentation = "" >
+                <column title="oid" path="oid" primarykey="true"/>
+                <column title="name" path="name" primarykey="false"/>
+        </query>
+    </datamodel>
+</extentview>
+
+<simpleview name="AnmeldenView" package = ".berechtigung.praesentation.benutzer.anmelden">
+    <visualizer type="Wings" template="de/sdm/sia/remis/portal/anmelden/wings/anmelden.html" />
+    <command name="anmelden"/>
+    <remotecommand name="ranmelden"/>
+</simpleview>
+
+</application>

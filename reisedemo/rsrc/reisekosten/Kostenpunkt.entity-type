@@ -1,0 +1,20 @@
+<entity-type name="Kostenpunkt">
+   <package>reisekosten</package>
+   <primary-key-generator>com.sdm.quasarx.persistence.util.SimplePKGenerator</primary-key-generator>
+   <properties>
+      <attribute name="oid">
+         <required>true</required>
+         <primary-key>true</primary-key>
+         <type>reisekosten.oid</type>
+      </attribute>
+      <attribute name="betrag">
+         <type>reisekosten.Money</type>
+      </attribute>
+      <relationship name="reise">
+         <cascading-delete>NEVER</cascading-delete>
+         <inverse>kostenpunkte</inverse>
+         <multiplicity>1</multiplicity>
+         <to>reisekosten.Reise</to>
+      </relationship>
+   </properties>
+</entity-type>

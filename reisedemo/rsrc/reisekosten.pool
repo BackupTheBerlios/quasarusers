@@ -1,0 +1,98 @@
+<pool url="jdbc:oracle:thin:@cgn0107:1521:marco" user="itbasis" password="jawa" driver="oracle.jdbc.driver.OracleDriver" name="reisekosten">
+   <import>
+      <import-class class="reisekosten.Fahrtkosten"/>
+      <import-class class="reisekosten.Kostenpunkt"/>
+      <import-class class="reisekosten.Kostenstelle"/>
+      <import-class class="reisekosten.Reise"/>
+      <import-class class="reisekosten.Uebernachtung"/>
+   </import>
+   <tables>
+      <table name="KOSTENPUNKT" schema="itbasis">
+         <column name="TID" jdbc-type="INTEGER">
+            <null>false</null>
+         </column>
+         <column name="OID" jdbc-type="BIGINT">
+            <null>false</null>
+            <primary-key>true</primary-key>
+         </column>
+         <column name="BETRAG_VALUE" jdbc-type="DOUBLE"/>
+         <column name="BETRAG_CURRENCY" jdbc-type="VARCHAR"/>
+         <column name="OR_REISE" jdbc-type="BIGINT">
+            <null>false</null>
+         </column>
+      </table>
+      <table name="UEBERNACHTUNG" schema="itbasis">
+         <column name="OID" jdbc-type="BIGINT">
+            <null>false</null>
+            <primary-key>true</primary-key>
+         </column>
+         <column name="HOTEL" jdbc-type="VARCHAR"/>
+         <column name="ANZAHL_NAECHTE" jdbc-type="DOUBLE"/>
+      </table>
+      <table name="FAHRTKOSTEN" schema="itbasis">
+         <column name="OID" jdbc-type="BIGINT">
+            <null>false</null>
+            <primary-key>true</primary-key>
+         </column>
+         <column name="WEG" jdbc-type="VARCHAR"/>
+         <column name="ENTFERNUNG" jdbc-type="DOUBLE"/>
+      </table>
+      <table name="REISE" schema="itbasis">
+         <column name="OID" jdbc-type="BIGINT">
+            <null>false</null>
+            <primary-key>true</primary-key>
+         </column>
+         <column name="BESCHREIBUNG" jdbc-type="VARCHAR">
+            <null>false</null>
+         </column>
+         <column name="START_DATUM" jdbc-type="DATE"/>
+         <column name="END_DATUM" jdbc-type="DATE"/>
+         <column name="MITARBEITER" jdbc-type="VARCHAR"/>
+         <column name="OR_KOSTENSTELLE" jdbc-type="BIGINT"/>
+      </table>
+      <table name="KOSTENSTELLE" schema="itbasis">
+         <column name="OID" jdbc-type="BIGINT">
+            <null>false</null>
+            <primary-key>true</primary-key>
+         </column>
+         <column name="NUMMER" jdbc-type="SMALLINT"/>
+         <column name="NAME" jdbc-type="VARCHAR"/>
+      </table>
+   </tables>
+   <or-mapping>
+      <map-class class="reisekosten.Kostenpunkt">
+         <map-base-type tid-column="itbasis.KOSTENPUNKT.tid" tid="0" table="itbasis.KOSTENPUNKT"/>
+         <map-attribute attribute="oid" column="itbasis.KOSTENPUNKT.OID"/>
+         <map-attribute attribute="betrag.value" column="itbasis.KOSTENPUNKT.BETRAG_VALUE"/>
+         <map-attribute attribute="betrag.currency" column="itbasis.KOSTENPUNKT.BETRAG_CURRENCY"/>
+         <map-relationship from-column="itbasis.KOSTENPUNKT.OR_REISE" to-column="itbasis.REISE.OID" relationship="reise"/>
+      </map-class>
+      <map-class class="reisekosten.Uebernachtung">
+         <map-sub-type parent-table="itbasis.KOSTENPUNKT" tid="1" table="itbasis.UEBERNACHTUNG"/>
+         <map-attribute attribute="hotel" column="itbasis.UEBERNACHTUNG.HOTEL"/>
+         <map-attribute attribute="anzahlNaechte" column="itbasis.UEBERNACHTUNG.ANZAHL_NAECHTE"/>
+      </map-class>
+      <map-class class="reisekosten.Fahrtkosten">
+         <map-sub-type parent-table="itbasis.KOSTENPUNKT" tid="2" table="itbasis.FAHRTKOSTEN"/>
+         <map-attribute attribute="weg" column="itbasis.FAHRTKOSTEN.WEG"/>
+         <map-attribute attribute="entfernung" column="itbasis.FAHRTKOSTEN.ENTFERNUNG"/>
+      </map-class>
+      <map-class class="reisekosten.Reise">
+         <map-base-type table="itbasis.REISE"/>
+         <map-attribute attribute="oid" column="itbasis.REISE.OID"/>
+         <map-attribute attribute="beschreibung" column="itbasis.REISE.BESCHREIBUNG"/>
+         <map-relationship from-column="itbasis.REISE.OID" to-column="itbasis.KOSTENPUNKT.OR_REISE" relationship="kostenpunkte"/>
+         <map-attribute attribute="startDatum" column="itbasis.REISE.START_DATUM"/>
+         <map-attribute attribute="endDatum" column="itbasis.REISE.END_DATUM"/>
+         <map-attribute attribute="mitarbeiter" column="itbasis.REISE.MITARBEITER"/>
+         <map-relationship from-column="itbasis.REISE.OR_KOSTENSTELLE" to-column="itbasis.KOSTENSTELLE.OID" relationship="kostenstelle"/>
+      </map-class>
+      <map-class class="reisekosten.Kostenstelle">
+         <map-base-type table="itbasis.KOSTENSTELLE"/>
+         <map-attribute attribute="oid" column="itbasis.KOSTENSTELLE.OID"/>
+         <map-attribute attribute="nummer" column="itbasis.KOSTENSTELLE.NUMMER"/>
+         <map-attribute attribute="name" column="itbasis.KOSTENSTELLE.NAME"/>
+         <map-relationship from-column="itbasis.KOSTENSTELLE.OID" to-column="itbasis.REISE.OR_KOSTENSTELLE" relationship="reisen"/>
+      </map-class>
+   </or-mapping>
+</pool>

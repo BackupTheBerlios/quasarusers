@@ -1,0 +1,26 @@
+<configuration>
+    <trace-level label="com.sdm.jeff" level="FULL"/>
+    <log-level label="com.sdm.jeff" level="FULL"/>
+    <jdbc-driver>oracle.jdbc.driver.OracleDriver</jdbc-driver>
+    <persistence name="Test">
+        <pooled-data-source>
+            <url>jdbc:oracle:thin:@cgn0107:1521:marco</url>
+            <user>itbasis</user>
+            <password>jawa</password>
+            <max-connections>10</max-connections>
+            <opt-connections>5</opt-connections>
+        </pooled-data-source>
+        <cache>
+            <size>1000</size>
+            <purge-count>100</purge-count>
+        </cache>
+        <model>
+           <load-pool>
+               <repository>
+                   <jar-repository/>
+               </repository>
+               <pool>reisekosten</pool>
+           </load-pool>
+        </model>
+    </persistence>
+</configuration>

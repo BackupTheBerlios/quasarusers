@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<service>
+  <classpath codebase="deploy" archives="quasar_businessobject-1.2b1.jar, quasar_persistence-1.2b1.jar"/>
+
+  <mbean code="de.sdm.sia.remis.portal.server.QuasarServer"
+  name="quasar:service=QuasarServer,name=RemisQuasarServer">
+    <attribute name="ConfigFile">serverconfiguration.xml</attribute>
+  </mbean>
+</service>

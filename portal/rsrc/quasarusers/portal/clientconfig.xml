@@ -1,0 +1,12 @@
+<configuration>
+  <trace-level label="com.sdm.quasar.modelview" level="FULL"/>
+
+  <communicationmanager protocols="com.sdm.quasar.communication.channel.implementation.SocketChannelServer"
+    arguments="QuasarServer;rmi://pentium/" defaultprotocol="LOCAL"></communicationmanager>
+
+  <view userinterfacetype="swing">
+    <communicationdelegate/>
+  </view>
+
+  <modelview></modelview>
+</configuration>

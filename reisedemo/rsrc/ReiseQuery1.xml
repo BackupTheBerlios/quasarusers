@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<query documentation="" label="Reisen" name="reise1" type="reisekosten.Reise">
+    <columns>
+        <column path="beschreibung" title="beschreibung"/>
+        <column path="mitarbeiter" title="mitarbeiter"/>
+        <column path="startDatum" title="startDatum"/>
+        <column path="endDatum" title="endDatum"/>
+    </columns>
+    <ordering/>
+</query>

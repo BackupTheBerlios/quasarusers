@@ -1,0 +1,11 @@
+<type class="reisekosten.Money" name="Money">
+   <package>reisekosten</package>
+   <composite>
+      <attribute name="value">
+         <type>reisekosten.num6</type>
+      </attribute>
+      <attribute name="currency">
+         <type>reisekosten.str3</type>
+      </attribute>
+   </composite>
+</type>
