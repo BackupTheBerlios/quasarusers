@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<document>
+
+  <properties>
+    <author email="schmickler@developer.berlios.de">Marco Schmickler</author>
+    <title>The Quasar Users Project</title>
+  </properties>
+
+<body>
+
+<section name="News">
+<p>
+<ul>
+<li><a href="site/news.html#0326.1">26 Mar 2003 - Eröffnung</a></li>
+</ul>
+</p>
+</section>
+
+<section name="Weitere Links">
+<p>
+<ul>
+<li><a href="http://developer.berlios.de/projects/quasarusers">QuasarUsers Projektseite bei Berlios</a></li>
+<li><a href="http://www.openquasar.de">OpenQuasar</a></li>
+</ul>
+</p>
+</section>
+
+<section name="Willkommen">
+<p>
+Dieses Projekt dient als Forum für Nutzer der <a href="http://www.openquasar.de">OpenQuasar</a> Software-Komponenten.
+</p>
+</section>
+
+<section name="Komponenten">
+
+<table>
+<tr>
+<th></th>
+<th align="center"><font color="#ffffff"><strong><a name="tools">Teilprojekte</a></strong></font></th>
+</tr>
+<tr>
+<td align="right" valign="top">
+<a href="appserver/index.html">Appserver Integration</a>
+</td>
+<td valign="top">Integration von Quasar-Komponenten in J2EE-Application Server</td>
+</tr>
+</table>
+
+</section>
+
+</body>
+</document>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="Quasar Users Site"
+        href=".">
+
+    <title>Quasar Users Homepage</title>
+
+    <!-- If you want your project logo hyperlinked to the project home
+         page in the upper right corner of each generated page, set "href"
+         below to the URL of the image, and uncomment this element
+    -->
+    <logo href="/images/void.gif">
+      The Quasar Users Project
+    </logo>
+
+
+    <body>
+    <menu name="Projekt">
+        <item name="Willkommen"        href="/index.html"/>
+        <item name="News &amp; Status" href="/site/news.html"/>
+        <item name="Suche"   href="http://www.google.com/advanced_search?q=+site:quasarusers.berlios.de&amp;hl=en&amp;as_qdr=all"/>
+    </menu>
+
+    <menu name="Download">
+        <item name="Berlios"   href="http://developer.berlios.de/projects/quasarusers"/>
+        <item name="Dateien"           href="http://developer.berlios.de/project/showfiles.php?group_id=743"/>
+        <item name="FTP"               href="ftp://ftp.berlios.de/pub/quasarusers/"/>
+        <item name="CVS"               href="https://developer.berlios.de/cvs/?group_id=743"/>
+    </menu>
+
+    <menu name="Teilprojekte">
+        <item name="Appserver"         href="/appserver/index.html"/>
+    </menu>
+
+    </body>
+</project>

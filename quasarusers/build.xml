@@ -1,0 +1,81 @@
+<project name="build-site" default="docs.main" basedir=".">
+
+    <!-- Initialization properties -->
+    <property name="project.name"   value="site"/>
+    <property name="docs.src" value="./xdocs"/>
+    <property name="site.docs" value="./projects"/>
+    <property name="docs.dest" value="./docs"/>
+
+    <!-- Build classpath -->
+    <path id="classpath">
+        <fileset dir="./lib">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+
+    <!-- This target is for output of HTML pages via XSLT -->
+    <!-- Requires JAXP/1.1 (all three JARs) or Xerces+Xalan -->
+    <target name="xslt"
+        description="Render HTML Pages via XSLT">
+
+        <!-- Create destination directory if necessary -->
+        <mkdir     dir="${docs.dest}"/>
+
+        <!-- Transform the top-level directory -->
+        <style   basedir="${docs.src}"
+            destdir="${docs.dest}"
+            extension=".html"
+            style="stylesheets/site.xsl"
+            force="yes"
+            excludes="empty.xml"
+            includes="*.xml">
+            <param name="relative-path" expression="."/>
+        </style>
+
+        <!-- Transform the "site" subdirectory -->
+        <style   basedir="${docs.src}/site"
+            destdir="${docs.dest}/site"
+            extension=".html"
+            style="../stylesheets/site.xsl"
+            force="yes"
+            includes="*.xml">
+            <param name="relative-path" expression=".."/>
+        </style>
+
+        <!-- Transform the "site" subdirectory -->
+        <style   basedir="${docs.src}/appserver"
+            destdir="${docs.dest}/appserver"
+            extension=".html"
+            style="../stylesheets/site.xsl"
+            force="yes"
+            includes="*.xml">
+            <param name="relative-path" expression=".."/>
+        </style>
+
+        <!-- Copy static resource files -->
+        <copy    todir="${docs.dest}/images" filtering="no">
+            <fileset dir="${docs.src}/images">
+                <include name="**/*.gif"/>
+                <include name="**/*.jpeg"/>
+                <include name="**/*.jpg"/>
+            </fileset>
+        </copy>
+
+        <!-- Copy CSS stylesheets -->
+        <copy    todir="${docs.dest}" filtering="no">
+            <fileset dir="${docs.src}">
+                <include name="**/*.css"/>
+            </fileset>
+        </copy>
+
+        <zip basedir="${docs.dest}" zipfile="docs.zip"></zip>
+
+    </target>
+
+    <target name="deploy">
+        <exec command="d:/cygwin/bin/scp docs.zip schmickler@shell.berlios.de:docs.zip" ></exec>
+        <exec command="d:/cygwin/bin/ssh -l schmickler shell.berlios.de docs.bsh" ></exec>
+    </target>
+
+</project>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<document>
+
+  <properties>
+    <author email="schmickler@developer.berlios.de">Marco Schmickler</author>
+    <title>The Quasar Users Project</title>
+  </properties>
+
+<body>
+
+<section name="Application Server Integration">
+<p>
+     Ziel dieses Teilprojekts ist die Integration von Quasar-Komponenten in J2EE-Application Server. Derzeitige Zielplattform ist JBoss.
+</p>
+</section>
+
+</body>
+</document>
+
