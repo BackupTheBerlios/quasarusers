@@ -24,7 +24,7 @@
         <item name="Berlios"   href="http://developer.berlios.de/projects/quasarusers"/>
         <item name="Dateien"           href="http://developer.berlios.de/project/showfiles.php?group_id=743"/>
         <item name="FTP"               href="ftp://ftp.berlios.de/pub/quasarusers/"/>
-        <item name="CVS"               href="https://developer.berlios.de/cvs/?group_id=743"/>
+        <item name="CVS"               href="http://cvs.berlios.de/cgi-bin/viewcvs.cgi/quasarusers/"/>
     </menu>
 
     <menu name="Teilprojekte">
